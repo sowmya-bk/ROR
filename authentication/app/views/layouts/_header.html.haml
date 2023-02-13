@@ -1,0 +1,19 @@
+%nav.navbar.navbar-expand-lg.navbar.bg-dark
+  = link_to 'App',root_path, class:"navbar-brand"
+  %ul.navbar-nav.mr-auto
+    - if user_signed_in?
+      %li.nav-item
+        = link_to 'Sign Out',destroy_user_session_path, method: :delete
+      %li.nav-item
+        = link_to 'Edit Profile',edit_user_registration_path
+    - else
+      %li.nav-item.nav-link
+        = link_to 'Sign Up',new_user_registration_path
+      %li.nav-item
+        = link_to 'Sign In',new_user_session_path
+:css
+  ul{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }

@@ -1,0 +1,8 @@
+%form{action: user_session_path,method: 'post'}
+  = label :user, :email, "Email"
+  = text_field :user, :email
+  %br
+  = label :user, :password
+  = password_field :user, :password
+  %br
+  %button{type:'submit'}Log in

@@ -1,0 +1,44 @@
+%script{src:"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",type: "text/javascript"}
+.container 
+
+  = label_tag 'Email'
+  %br
+  %input{ :type => "email",:id => 'email'}
+  %br
+  = label_tag 'Password'
+  %br
+  %input{ :type => "password",:id => 'password'}
+  %br
+  %a{id:'link',href: '#',onclick: "login()"}Log In
+
+:javascript
+  function login()
+  {
+    const mail = document.getElementById('email');
+    const pwd = document.getElementById('password');
+    event.preventDefault();
+    $.ajax({
+        method: 'POST',
+        url: '/users/sign_in',
+        data: { email: mail.value, password: pwd.value}
+        
+    });
+  }
+ 
+
+:css
+  .container{
+    align-items:center;
+    width:250px;
+    height:250px;
+    background-color:grey;
+    margin-top:40px;
+    padding-top:10px;
+  }
+  #link{
+    padding-top:10px;
+    color:white;
+    display:flex;
+    justify-content: center;
+  }
+  
