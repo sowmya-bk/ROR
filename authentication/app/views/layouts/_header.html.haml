@@ -1,19 +1,54 @@
-%nav.navbar.navbar-expand-lg.navbar.bg-dark
+%nav.navbar.navbar-expand-lg.navbar.bg-light
   = link_to 'App',root_path, class:"navbar-brand"
   %ul.navbar-nav.mr-auto
     - if user_signed_in?
-      %li.nav-item
-        = link_to 'Sign Out',destroy_user_session_path, method: :delete
-      %li.nav-item
-        = link_to 'Edit Profile',edit_user_registration_path
+      %li.nav-item.dropdown-center
+      %a{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}=image_tag "img.jpg",class:'img' 
+      %ul.dropdown-menu.dropdown-menu-end
+        %li.dropdown-item
+          = link_to 'Sign Out',destroy_user_session_path, method: :delete
+        %li.dropdown-item 
+          = link_to 'Edit Profile',edit_user_registration_path
+          
     - else
       %li.nav-item.nav-link
         = link_to 'Sign Up',new_user_registration_path
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+        %ul.dropdown-menu
+          %li.dropdown-item 1
+          %li.dropdown-item 2
+          %li.dropdown-item 3
       %li.nav-item
         = link_to 'Sign In',new_user_session_path
+        %a.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+        %ul.dropdown-menu
+          %li.dropdown-item 4
+          %li.dropdown-item 5
+          %li.dropdown-item 6
 :css
   ul{
     display:flex;
     align-items:center;
     justify-content:center;
+    
   }
+  li{
+    margin:5px;
+  }
+  .table{
+    border: 1px solid black;
+  }
+  .img{
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    position:absolute;
+    right:20px;
+    
+  }
+  .dm{
+    position:absolute;
+    right:30px;
+    align-items:right;
+  }
+  
