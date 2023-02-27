@@ -13,5 +13,7 @@
   .field
     = f.label :body
     = f.text_area :body
+  .field 
+    %input{:type => 'hidden',:value => current_user.id,:name => "post[post_created_user_id]"}
   .actions
     = f.submit
