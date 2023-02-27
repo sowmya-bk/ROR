@@ -1,0 +1,31 @@
+= form_for(post) do |f|
+  - if post.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(post.errors.count, "error")
+        prohibited this post from being saved:
+      %ul
+        - post.errors.full_messages.each do |message|
+          %li= message
+  .title-field
+    = f.label :title
+    = f.text_field :title
+  .body-field
+    = f.label :body
+    = f.text_area :body
+  .user-field 
+    = f.label :User
+    %select{:name => "post[username]",:multiple => 'multiple'}
+      - User.all.each do |user|
+        - if user!=current_user
+          %option{:value => user.username}
+            #{user.username}
+      
+  .actions
+    = f.submit
+
+:css
+   .title-field,.body-field,.user-field{
+      margin-top:5px;
+      margin-bottom:5px;
+    }
