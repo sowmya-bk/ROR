@@ -1,3 +1,5 @@
+%link{:href => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css",:rel => "stylesheet"}
+%script{:src => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"}
 = form_for(post) do |f|
   - if post.errors.any?
     #error_explanation
@@ -13,6 +15,13 @@
   .body-field
     = f.label :body
     = f.text_area :body
+  .assigned-users-field 
+    %select{:multiple => true,:name => "post[assigned_user_id[]]",:size => "6",:id => 'selecttag'}
+      - User.each do |user|
+        - if user!=current_user
+          %option{:value => user.id}
+            #{user.username}
+          i=i+1 
   .actions
     = f.submit
 
@@ -21,3 +30,9 @@
       margin-top:5px;
       margin-bottom:5px;
     }
+    .assigned-user-field{
+      margin-left:10px;
+      margin-right:10px;
+    }
+:javascript
+  new MultiSelectTag('selecttag')
