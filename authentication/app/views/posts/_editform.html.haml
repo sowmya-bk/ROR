@@ -1,5 +1,6 @@
 %link{:href => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css",:rel => "stylesheet"}
 %script{:src => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"}
+%script{src:"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",type: "text/javascript"}
 = form_for(post) do |f|
   - if post.errors.any?
     #error_explanation
@@ -11,19 +12,19 @@
           %li= message
   .title-field
     = f.label :title
-    = f.text_field :title
+    = f.text_field :title,:id => "titleid"
   .body-field
     = f.label :body
-    = f.text_area :body
+    = f.text_area :body,:id =>"bodyid"
   .assigned-users-field 
-    %select{:multiple => true,:name => "post[assigned_user_id[]]",:size => "6",:id => 'selecttag'}
+    %select{:multiple => true,:name => "post[assigned_user_id]",:id => 'selecttag'}
       - User.each do |user|
         - if user!=current_user
           %option{:value => user.id}
             #{user.username}
-          i=i+1 
+
   .actions
-    = f.submit
+    %button{:type => 'submit',:onclick => 'editform()'}Update Post 
 
 :css
    .title-field,.body-field{
@@ -36,3 +37,23 @@
     }
 :javascript
   new MultiSelectTag('selecttag')
+  function editform(){
+    event.preventDefault();
+    var assigned_users_ids_array=[];
+    var title=document.querySelectorAll("#titleid");
+    var body=document.querySelectorAll("#bodyid");
+    let assigned_users=document.getElementById("selecttag");
+    for(i=0; i<assigned_users.selectedOptions.length; i++)
+    {
+      assigned_users_ids_array[i]=assigned_users.selectedOptions[i].value;
+     
+    }
+    $.ajax({
+      method: 'POST',
+      url: 'posts/:id/edit',
+      data: { Title: title[0].value,Body: body[0].value,assigned_user_id: assigned_users_ids_array }
+    });
+    console.log(body[0].value,title[0].value);
+    
+  }
+  
