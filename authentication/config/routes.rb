@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
+  post '/update/:id', to: "posts#update", as: 'update'
   resources :posts
   root "posts#index"
   

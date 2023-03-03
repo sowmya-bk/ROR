@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
-
+  skip_before_action :verify_authenticity_token
+  
   # GET /posts or /posts.json
   def index
     @posts = Post.all
@@ -25,18 +26,22 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.js { redirect_to post_url(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.js { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+    
   end
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     @assigned_user_id = Array.new
+    @assigned_user_id = params[:assigned_users]
+    @post[:assigned_user_id]=@assigned_user_id
+    @post.save
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
@@ -66,6 +71,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body, :post_created_user_id, assigned_user_id: [])
+      params.require(:post).permit(:title, :body, :post_created_user_id, assigned_user_id: params[:assigned_users])
     end
 end
