@@ -1,12 +1,29 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy users_assignment]
   skip_before_action :verify_authenticity_token
   
   # GET /posts or /posts.json
   def index
     @posts = Post.all
   end
-
+  def users_assignment
+    @post=Post.find(params[:id])
+    @users=Array.new
+    index=0
+    User.each do |user|
+      if user!= current_user
+        @users[index]=user.id
+        index= index+1
+      end
+    end
+  end
+  def assigned_users
+    @assigned_users = Array.new
+    @assigned_users = params[:assigned_users]
+    @post = Post.find(params[:postid])
+    @post[:assigned_user_id] = @assigned_users
+    redirect_to root_path
+  end
   # GET /posts/1 or /posts/1.json
   def show
   end
