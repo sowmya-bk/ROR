@@ -1,0 +1,13 @@
+%link{:href => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css",:rel => "stylesheet"}
+%script{:src => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"}
+%form{:action => '/posts/assignedusers',:method => 'post'}
+  %input{:type => 'hidden',:value => @post.id, :name =>"postid"}
+  %select{:multiple => true,:name => "assigned_users[]",:id => 'selecttag'}
+    -@users.each do |user|
+      -@user=User.find(user)
+      %option{:value => user}
+        #{@user.username}
+  %button{:type => 'submit'}Assign Users
+
+:javascript
+  new MultiSelectTag("selecttag");

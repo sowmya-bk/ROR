@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy users_assignment]
+  before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :verify_authenticity_token
   
   # GET /posts or /posts.json
@@ -22,6 +22,7 @@ class PostsController < ApplicationController
     @assigned_users = params[:assigned_users]
     @post = Post.find(params[:postid])
     @post[:assigned_user_id] = @assigned_users
+    @post.save
     redirect_to root_path
   end
   # GET /posts/1 or /posts/1.json
@@ -55,10 +56,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    @assigned_user_id = Array.new
-    @assigned_user_id = params[:assigned_users]
-    @post[:assigned_user_id]=@assigned_user_id
-    @post.save
+    
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
