@@ -25,6 +25,17 @@ class PostsController < ApplicationController
     @post.save
     redirect_to root_path
   end
+  def remove_assigned_user
+    @post=Post.find(params[:id])
+    @post[:assigned_user_id].each do |user|
+      if user == params[:userid]
+        @post[:assigned_user_id].remove(user)
+        @post.save
+      end
+    end
+    puts @post[:assigned_user_id]
+
+  end
   # GET /posts/1 or /posts/1.json
   def show
   end
