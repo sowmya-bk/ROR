@@ -13,13 +13,13 @@
     %tr
       %th Assigned Users
       %th{:colspan =>'1'}
-  %tbody#assignedUsers
+  %tbody
     -if @post[:assigned_user_id]!=nil
       -@post[:assigned_user_id].each do |user|
         -@user=User.find(user)
         %tr
           %td #{@user.username}
-          %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :delete, data: { confirm: 'Are you sure?' }
+          %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure?' }
      
 
 :javascript

@@ -27,13 +27,15 @@ class PostsController < ApplicationController
   end
   def remove_assigned_user
     @post=Post.find(params[:id])
-    @post[:assigned_user_id].each do |user|
+    @assigned_users_array=Array.new
+    @assigned_users_array=@post[:assigned_user_id]
+    @assigned_users_array.each do |user|
       if user == params[:userid]
-        @post[:assigned_user_id].remove(user)
-        @post.save
+        @assigned_users_array.delete(user)
       end
     end
-    puts @post[:assigned_user_id]
+    redirect_to user_assignment_path(assigned_users:@assigned_users_array,postid:@post.id),method: :post
+    
 
   end
   # GET /posts/1 or /posts/1.json
