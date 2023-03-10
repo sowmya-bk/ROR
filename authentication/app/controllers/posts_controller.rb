@@ -21,21 +21,22 @@ class PostsController < ApplicationController
     @assigned_users = Array.new
     @assigned_users = params[:assigned_users]
     @post = Post.find(params[:postid])
-    @post[:assigned_user_id] = @assigned_users
+    if @post[:assigned_user_id] == nil
+      @post[:assigned_user_id] = @assigned_users
+    else
+      @post[:assigned_user_id]=@post[:assigned_user_id]+@assigned_users
+    end
     @post.save
-    redirect_to root_path
+    redirect_to root_path, notice: "User Successfully assigned."
   end
   def remove_assigned_user
     @post=Post.find(params[:id])
     @assigned_users_array=Array.new
-    @assigned_users_array=@post[:assigned_user_id]
-    @assigned_users_array.each do |user|
-      if user == params[:userid]
-        @assigned_users_array.delete(user)
-      end
-    end
-    redirect_to user_assignment_path(assigned_users:@assigned_users_array,postid:@post.id),method: :post
-    
+    @assigned_users_array[0]=params[:userid]
+    @post[:assigned_user_id]=@post[:assigned_user_id]-@assigned_users_array
+    puts @post[:assigned_user_id]
+    @post.save
+    redirect_to root_path, notice: "User Successfully removed."
 
   end
   # GET /posts/1 or /posts/1.json
