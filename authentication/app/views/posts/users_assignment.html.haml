@@ -13,7 +13,7 @@
     %thead
       %tr
         %th Assigned Users
-        %th{:colspan =>'1'}
+        %th{:colspan =>'2'}
     %tbody
       -if @post[:assigned_user_id]!=nil
         -@post[:assigned_user_id].each do |user|
@@ -21,6 +21,16 @@
           %tr
             %td #{@user.username}
             %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
+            %td= link_to 'Send Mail',":javascript => 'display_popup()'"
+          #email_form 
+
+            %form{:action => ''}
+              %input{:type =>'hidden',:value =>@user.email}
+              %label Comments
+              %br
+              %textarea{:id =>'comment'}
+              %br
+              %button{:type =>'submit' } Send Email
     
 :css
   .container{
@@ -34,7 +44,20 @@
     margin-top:30px;
     margin-right:40px;
   }
+  #email_form{
+    display:none;
+    width:250px;
+    height:300px;
+    background:lightblue; 
+    align-items:center;
+    margin:5px;
+    padding:30px;
+    padding-top:60px;
+  }
 :javascript
   new MultiSelectTag("selecttag");
-
+  function display_popup(){
+    console.log('hi');
+    display:block;
+  }
   
