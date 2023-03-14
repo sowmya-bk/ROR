@@ -39,6 +39,8 @@ class PostsController < ApplicationController
     redirect_to root_path, notice: "User Successfully removed."
 
   end
+  def send_mail_to_user
+  end
   # GET /posts/1 or /posts/1.json
   def show
   end

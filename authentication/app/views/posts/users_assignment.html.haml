@@ -21,11 +21,14 @@
           %tr
             %td #{@user.username}
             %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
-            %td= link_to 'Send Mail',":javascript => 'display_popup()'"
+            %td
+              %a{:onclick => 'display_popup()',:href =>'#'} Send Mail
           #email_form 
 
             %form{:action => ''}
-              %input{:type =>'hidden',:value =>@user.email}
+              %input{:type =>'hidden',:value =>@user,:name =>'mail'}
+              %button{:onclick =>'close_popup()'}X
+              %br
               %label Comments
               %br
               %textarea{:id =>'comment'}
@@ -49,15 +52,19 @@
     width:250px;
     height:300px;
     background:lightblue; 
-    align-items:center;
-    margin:5px;
     padding:30px;
     padding-top:60px;
+    transform: translate(300px) scale(1);
+    
   }
 :javascript
   new MultiSelectTag("selecttag");
   function display_popup(){
-    console.log('hi');
-    display:block;
+    event.preventDefault();
+    document.getElementById('email_form').style.display='block';
+  }
+  function close_popup(){
+    document.getElementById('email_form').style.display='none';
+
   }
   
