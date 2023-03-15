@@ -20,20 +20,20 @@
           -@user=User.find(user)
           %tr
             %td #{@user.username}
-            %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
+            
             %td
               %a{:onclick => 'display_popup()',:href =>'#'} Send Mail
-          #email_form 
-
-            %form{:action => ''}
-              %input{:type =>'hidden',:value =>@user,:name =>'mail'}
-              %button{:onclick =>'close_popup()'}X
-              %br
-              %label Comments
-              %br
-              %textarea{:id =>'comment'}
-              %br
-              %button{:type =>'submit' } Send Email
+            %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
+            #email_form 
+              %form{:action => '/sendmail'}
+                %input{:type =>'hidden',:value => @user.email,:name =>'userid'}
+                
+                %br
+                %label Comments
+                %br
+                %textarea{:id =>'comment',:name =>'comment'}
+                %br
+                %button{:type =>'submit' } Send Email
     
 :css
   .container{
