@@ -24,9 +24,10 @@
             %td
               %a{:onclick => 'display_popup()',:href =>'#'} Send Mail
             %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
+
             #email_form 
               %form{:action => '/sendmail'}
-                %input{:type =>'hidden',:value => @user.email,:name =>'userid'}
+                %input{:type =>'hidden',:value => @user.email,:name =>'user_email'}
                 
                 %br
                 %label Comments
@@ -34,7 +35,7 @@
                 %textarea{:id =>'comment',:name =>'comment'}
                 %br
                 %button{:type =>'submit' } Send Email
-    
+  
 :css
   .container{
     margin-top: 30px;

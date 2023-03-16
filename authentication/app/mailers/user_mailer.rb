@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-    default from:'sowmya.b@lumiseek.com'
+    default from:'sowmyabk38@gmail.com'
 
     layout "mailer"
 
