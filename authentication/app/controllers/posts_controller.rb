@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   def send_mail_to_user
     @user = params[:user_email]
     @comment=params[:comment]
-    UserMailer.email_to_user(@user,@comment).deliver_now
+    UserMailer.sending_email_with_comment(@user.to_s,@comment.to_s).deliver_now
     redirect_to root_path
   end
   # GET /posts/1 or /posts/1.json

@@ -3,9 +3,13 @@ class UserMailer < ApplicationMailer
 
     layout "mailer"
 
-    def email_to_user(user,comment)
-        @user=user
-        @comment=comment
-        mail(to: @user,subject: 'email')
+    def sending_email_with_comment(user,comment)
+        @user_mail=user
+        @mail_comment=comment
+        mail(
+            :from =>"sowmyabk38@gmail.com", 
+            :to => "#{@user_mail}", 
+            :subject => "email"
+        )
     end
 end

@@ -33,12 +33,15 @@ Rails.application.configure do
   config.action_mailer.perform_caching = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :sendmail
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port:     587,
     user_name: 'sowmyabk38@gmail.com',
     password: '',
-    authentication: 'plain'
+    authentication: 'plain',
+    domain: 'gmail.com',
+    enable_starttls_auto: true
   }
   # config.action_mailer.default_content_type="text/html"
  
