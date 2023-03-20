@@ -1,22 +1,97 @@
 %p#notice= notice
 %h1 Posts
 .container 
-  %table{class: 'table table-striped'}
-    %thead
-      %tr
-        %th Title
-        %th Body
-        %th{:colspan => "4"}
-    %tbody
-      - @posts.each do |post|
+  %ul.tabs
+    %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
+    %li.tab{'data-tab-target': "#user_posts"}User Posts
+  .tab-content
+    %table{class: 'table table-striped active',id: 'admin_posts','data-tab-content': '',border: '0'}
+      %thead
         %tr
-          %td= post.title
-          %td= post.body
-          %td= link_to 'Show', post
-          %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-          %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
-          %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+          %th Title
+          %th Body
+          %th{:colspan => "4"}
+      %tbody
+        - @posts.each do |post|
+          -if post[:post_created_user_id].to_s == current_user[:id].to_s
+            %tr
+              %td= post.title
+              %td= post.body
+              %td= link_to 'Show', post
+              %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
+              %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
+              %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+
+    %table{class: 'table table-striped',id: 'user_posts','data-tab-content': ''}
+      %thead
+        %tr
+          %th Title
+          %th Body
+          %th{:colspan => "4"}
+      %tbody
+        - @posts.each do |post|
+          -if post[:assigned_user_id].to_s.include?(current_user[:id].to_s)
+            %tr
+              %td= post.title
+              %td= post.body
+              %td= link_to 'Show', post
+              %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
+              %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
+              %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
 %br/
 = link_to 'New Post', new_post_path
-
 :css
+  [data-tab-content] {
+  display: none;
+  }
+
+  .active[data-tab-content] {
+    display: block;
+  }
+  thead,tbody{
+    
+    width:100%;
+    display:table;
+  }
+ 
+
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  .tab {
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .tab.active {
+    background-color: #CCC;
+  }
+
+  .tab:hover {
+    background-color: #AAA;
+  }
+
+  
+:javascript
+  const tabs = document.querySelectorAll('[data-tab-target]')
+  const tabContents = document.querySelectorAll('[data-tab-content]')
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = document.querySelector(tab.dataset.tabTarget)
+      tabContents.forEach(tabContent => {
+        tabContent.classList.remove('active')
+      })
+      tabs.forEach(tab => {
+        tab.classList.remove('active')
+      })
+      tab.classList.add('active')
+      target.classList.add('active')
+    })
+  })
