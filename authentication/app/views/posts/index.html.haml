@@ -8,9 +8,9 @@
     %table{class: 'table table-striped active',id: 'admin_posts','data-tab-content': '',border: '0'}
       %thead
         %tr
-          %th Title
-          %th Body
-          %th{:colspan => "4"}
+          %th{:scope => 'col'} Title
+          %th{:scope => 'col'} Body
+          %th{:colspan => "4",:scope => 'col'}
       %tbody
         - @posts.each do |post|
           -if post[:post_created_user_id].to_s == current_user[:id].to_s
