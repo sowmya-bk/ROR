@@ -4,7 +4,12 @@ class PostsController < ApplicationController
   
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if params[:date] == nil
+      @date = Time.now
+    else
+      @date = params[:date]
+    end
+    @posts = Post.where(MONTH('created_at') == @date.month)
   end
   def users_assignment
     @post=Post.find(params[:id])

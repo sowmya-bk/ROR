@@ -1,5 +1,7 @@
 %p#notice= notice
 %h1 Posts
+.month-filter
+  %label= @date.strftime("%b %Y")
 .container 
   %ul.tabs
     %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
@@ -8,15 +10,17 @@
     %table{class: 'table table-striped active',id: 'admin_posts','data-tab-content': '',border: '0'}
       %thead
         %tr
-          %th{:scope => 'col'} Title
-          %th{:scope => 'col'} Body
-          %th{:colspan => "4",:scope => 'col'}
+          %th Title
+          %th Body
+          %th Created Date
+          %th{:colspan => "4"}
       %tbody
         - @posts.each do |post|
           -if post[:post_created_user_id].to_s == current_user[:id].to_s
             %tr
               %td= post.title
               %td= post.body
+              %td= post.created_at.strftime("%d %b %Y")
               %td= link_to 'Show', post
               %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
               %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
