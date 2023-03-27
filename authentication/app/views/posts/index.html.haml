@@ -15,16 +15,18 @@
           %th Created Date
           %th{:colspan => "4"}
       %tbody
-        - @posts.each do |post|
-          -if post[:post_created_user_id].to_s == current_user[:id].to_s
-            %tr
-              %td= post.title
-              %td= post.body
-              %td= post.created_at.strftime("%d %b %Y")
-              %td= link_to 'Show', post
-              %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-              %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
-              %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+        -if @posts != nil
+
+          - @posts.each do |post|
+            -if post[:post_created_user_id].to_s == current_user[:id].to_s
+              %tr
+                %td= post.title
+                %td= post.body
+                %td= post.created_at.strftime("%d %b %Y")
+                %td= link_to 'Show', post
+                %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
+                %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
+                %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
 
     %table{class: 'table table-striped',id: 'user_posts','data-tab-content': ''}
       %thead
@@ -33,15 +35,17 @@
           %th Body
           %th{:colspan => "4"}
       %tbody
-        - @posts.each do |post|
-          -if post[:assigned_user_id].to_s.include?(current_user[:id].to_s)
-            %tr
-              %td= post.title
-              %td= post.body
-              %td= link_to 'Show', post
-              %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-              %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
-              %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+        -if @posts != nil
+
+          - @posts.each do |post|
+            -if post[:assigned_user_id].to_s.include?(current_user[:id].to_s)
+              %tr
+                %td= post.title
+                %td= post.body
+                %td= link_to 'Show', post
+                %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
+                %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
+                %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
 %br/
 = link_to 'New Post', new_post_path
 :css
