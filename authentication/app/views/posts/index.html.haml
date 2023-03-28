@@ -1,7 +1,9 @@
 %p#notice= notice
 %h1 Posts
 .month-filter
+  = link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date:@date - 1.month)
   %label= @date.strftime("%b %Y")
+  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date:@date + 1.month)
 .container 
   %ul.tabs
     %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
@@ -33,6 +35,7 @@
         %tr
           %th Title
           %th Body
+          %th Created Date
           %th{:colspan => "4"}
       %tbody
         -if @posts != nil
@@ -42,6 +45,7 @@
               %tr
                 %td= post.title
                 %td= post.body
+                %td= post.created_at.strftime("%d %b %Y")
                 %td= link_to 'Show', post
                 %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
                 %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }

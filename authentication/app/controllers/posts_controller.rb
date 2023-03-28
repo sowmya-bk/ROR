@@ -7,9 +7,10 @@ class PostsController < ApplicationController
     if params[:date] == nil
       @date = Time.now
     else
-      @date = params[:date]
+      @date = params[:date].to_date
     end
-    Post.where("DATE_FORMAT('created_at', '%Y-%m')" == @date.strftime("%Y-%m"))
+    @posts=Post.where("MONTH(:created_at)-YEAR(:created_at)" == @date.month-@date.year)
+    puts @posts
   end
   def users_assignment
     @post=Post.find(params[:id])
