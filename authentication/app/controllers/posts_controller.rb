@@ -9,8 +9,7 @@ class PostsController < ApplicationController
     else
       @date = params[:date].to_date
     end
-    @posts=Post.where("MONTH(:created_at)-YEAR(:created_at)" == @date.month-@date.year)
-    puts @posts
+    @posts=Post.where(:created_at.to_s == @date.to_date)
   end
   def users_assignment
     @post=Post.find(params[:id])
@@ -70,10 +69,10 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.js { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
-        format.js { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
