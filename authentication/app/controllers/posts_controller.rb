@@ -9,7 +9,7 @@ class PostsController < ApplicationController
     else
       @date = params[:date].to_date
     end
-    @posts=Post.where(:created_at.to_s == @date.to_date)
+    @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month , :created_at => @date.beginning_of_week..@date.end_of_week)
   end
   def users_assignment
     @post=Post.find(params[:id])

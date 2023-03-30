@@ -1,9 +1,15 @@
 %p#notice= notice
 %h1 Posts
+.week-filter
+  =link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date: @date - 7.day)
+  %label= @date.beginning_of_week.strftime("%d %b,%Y")
+  %label to
+  %label= @date.end_of_week.strftime("%d %b,%Y") 
+  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date: @date + 7.day)
 .month-filter
-  = link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date:@date - 1.month)
-  %label= @date.strftime("%b %Y")
-  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date:@date + 1.month)
+  = link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date: @date - 1.month)
+  %label= @date.strftime("%B %Y")
+  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date: @date + 1.month)
 .container 
   %ul.tabs
     %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
@@ -65,7 +71,12 @@
     width:100%;
     display:table;
   }
- 
+  .month-filter{
+    text-align:center;
+  }
+  .week-filter{
+    text-align:center;
+  }
 
   .tabs {
     display: flex;
