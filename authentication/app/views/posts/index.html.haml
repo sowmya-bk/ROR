@@ -1,7 +1,7 @@
 %p#notice= notice
 %h1 Posts
 .week-filter
-  =link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date: @date - 7.day)
+  =link_to raw('<i class="fa fa-arrow-left" aria-hidden="true" ></i>'), posts_path(date: @date - 7.day),remote: true
   %label= @date.beginning_of_week.strftime("%d %b,%Y")
   %label to
   %label= @date.end_of_week.strftime("%d %b,%Y") 
@@ -23,18 +23,7 @@
           %th Created Date
           %th{:colspan => "4"}
       %tbody
-        -if @posts != nil
-
-          - @posts.each do |post|
-            -if post[:post_created_user_id].to_s == current_user[:id].to_s
-              %tr
-                %td= post.title
-                %td= post.body
-                %td= post.created_at.strftime("%d %b %Y")
-                %td= link_to 'Show', post
-                %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-                %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
-                %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+        = render 'adminposts', posts: @posts
 
     %table{class: 'table table-striped',id: 'user_posts','data-tab-content': ''}
       %thead
@@ -44,23 +33,13 @@
           %th Created Date
           %th{:colspan => "4"}
       %tbody
-        -if @posts != nil
-
-          - @posts.each do |post|
-            -if post[:assigned_user_id].to_s.include?(current_user[:id].to_s)
-              %tr
-                %td= post.title
-                %td= post.body
-                %td= post.created_at.strftime("%d %b %Y")
-                %td= link_to 'Show', post
-                %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-                %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
-                %td= link_to raw('<i class="fas fa-users"></i>'),assignusers_path(post)
+        = render 'userposts', posts: @posts
 %br/
 = link_to 'New Post', new_post_path
+
 :css
   [data-tab-content] {
-  display: none;
+    display: none;
   }
 
   .active[data-tab-content] {
