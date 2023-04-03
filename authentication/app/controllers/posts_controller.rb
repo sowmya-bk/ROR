@@ -10,7 +10,10 @@ class PostsController < ApplicationController
       @date = params[:date].to_date
     end
     @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month , :created_at => @date.beginning_of_week..@date.end_of_week)
-    
+    respond_to do |format|
+      format.html
+      format.js {render layout:false}
+    end
   end
   def users_assignment
     @post=Post.find(params[:id])

@@ -1,6 +1,6 @@
 -if posts != nil
   - posts.each do |post|
-    -if post[:assigned_user_id].to_s.include?(current_user[:id].to_s)
+    -if post[:post_created_user_id].to_s == current_user[:id].to_s
       %tr
         %td= post.title
         %td= post.body
