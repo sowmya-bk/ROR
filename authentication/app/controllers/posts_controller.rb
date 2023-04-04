@@ -54,6 +54,22 @@ class PostsController < ApplicationController
     UserMailer.sending_email_with_comment(@user.to_s,@comment.to_s).deliver_now
     redirect_to root_path
   end
+  def send_multiple_mails
+    
+    @users_array=params[:users]
+    @comment=params[:comment]
+    @user_mails=Array.new
+    puts @users_array
+    puts @users_array[0]
+    @users_array.each do |user|
+      puts user
+      @user=User.find(user)
+      @user_mails.append(@user.email)
+    end
+    UserMailer.sending_email_with_comment(@user_mails,@comment)
+    redirect_to root_path
+
+  end
   # GET /posts/1 or /posts/1.json
   def show
   end

@@ -8,6 +8,7 @@
     %strong Body:
     = @post.body
   = link_to 'Back', posts_path
+  %a{:onclick => 'display()',:href =>'#'}Bulk Mails
   %table{class: "table table-striped"}
     %thead
       %tr
@@ -20,12 +21,38 @@
           %tr
             %td #{@user.username}
             %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
-
+    #mail_form
+      %form{:action => '/multiplemails'}
+        %button{:onclick => 'popup_close()',:id =>'close'}X
+        %input{:type=>'hidden',:name=>'users',:value=>@post[:assigned_user_id]}
+        %br
+        %label Comments
+        %br
+        %textarea{:name=>'comment'}
+        %br
+        %button{:type => 'submit'}Send Mail
 :css
   .container{
    align-items:center;
    margin-left:200px;
    
   }
-  
+  #mail_form{
+    display:none;
+    width:300px;
+    height:200px;
+    background:green;
+    padding:15px;
+    margin:15px;
+  }
+:javascript
+
+  function display(){
+    console.log('hi');
+    event.preventDefault();
+    document.getElementById('mail_form').style.display='block';
+  }
+  function popup_close(){
+    document.getElementById('mail_form').style.display='none';
+  }
   
