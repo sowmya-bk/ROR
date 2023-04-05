@@ -51,22 +51,19 @@ class PostsController < ApplicationController
   def send_mail_to_user
     @user = params[:user_email]
     @comment=params[:comment]
-    UserMailer.sending_email_with_comment(@user.to_s,@comment.to_s).deliver_now
+    UserMailer.sending_email_with_comment(@user,@comment).deliver_now
     redirect_to root_path
   end
   def send_multiple_mails
     
-    @users_array=params[:users]
+    @users_array=eval(params[:users])    
     @comment=params[:comment]
     @user_mails=Array.new
-    puts @users_array
-    puts @users_array[0]
-    @users_array.each do |user|
-      puts user
-      @user=User.find(user)
+    for i in 0...@users_array.length
+      @user=User.find(@users_array[i])
       @user_mails.append(@user.email)
     end
-    UserMailer.sending_email_with_comment(@user_mails,@comment)
+    Resque.enqueue(BulkMails,@user_mails,@comment)
     redirect_to root_path
 
   end
