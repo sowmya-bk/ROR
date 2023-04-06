@@ -1,3 +1,5 @@
+require 'resque'
+require '/home/sowmya/ROR/authentication/app/jobs/bulk_mails.rb'
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy]
   skip_before_action :verify_authenticity_token
@@ -63,7 +65,9 @@ class PostsController < ApplicationController
       @user=User.find(@users_array[i])
       @user_mails.append(@user.email)
     end
+    puts "***************************"
     Resque.enqueue(BulkMails,@user_mails,@comment)
+    puts "***************************"
     redirect_to root_path
 
   end

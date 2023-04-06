@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   patch '/posts/:id/removeassigneduser',to: "posts#remove_assigned_user",as:'remove_assigned_user'
   get '/sendmail',to:"posts#send_mail_to_user"
   get '/multiplemails', to:"posts#send_multiple_mails"
+  require 'resque/server'
+  mount Resque::Server.new, at: "/resque"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
