@@ -1,0 +1,4 @@
+sleep:
+  cron: '1 * * * *'  
+  class: Sleeper
+  description: Runs the perform method in Sleeper

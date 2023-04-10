@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/sendmail',to:"posts#send_mail_to_user"
   get '/multiplemails', to:"posts#send_multiple_mails"
   require 'resque/server'
+  require 'resque/scheduler/server'
   mount Resque::Server.new, at: "/resque"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
