@@ -1,8 +1,7 @@
 require 'resque'
 class BulkMails
-    Rails.logger.info "MAILS COUNT ------------------------------------------------"
     @queue = :mails_queue
-    def self.perform(mails_array = [],comment = "HO")
+    def self.perform(mails_array ,comment)
         for i in 0...mails_array.length
           @mail = mails_array[i]
           @comment=comment
