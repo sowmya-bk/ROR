@@ -15,8 +15,8 @@
         %th Assigned Users
         %th{:colspan =>'1'}
     %tbody
-      -if @post[:assigned_user_id]!=nil
-        -@post[:assigned_user_id].each do |user|
+      -if @users!=nil
+        -@users.each do |user|
           -@user=User.find(user)
           %tr
             %td #{@user.username}
@@ -31,6 +31,7 @@
         %textarea{:name=>'comment'}
         %br
         %button{:type => 'submit'}Send Mail
+  = paginate @users
 :css
   .container{
    align-items:center;

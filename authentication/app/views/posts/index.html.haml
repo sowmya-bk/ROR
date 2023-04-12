@@ -1,5 +1,12 @@
 %p#notice= notice
 %h1 Posts
+.checkboxes
+  %label{:for => "week-filter"}
+  %input#week-filter{:onchange => "ShowHideDiv(this)", :type => "checkbox",:checked => "checked"}/
+  Week
+  %label{:for => "month-filter"}
+  %input#month-filter{:onchange => "ShowHideDiv(this)", :type => "checkbox",:checked => "checked"}/
+  Month
 .filters
   = render 'filter' , datee:@date
 .container 
@@ -27,6 +34,8 @@
           = render 'userposts', posts: @posts
 %br/
 = link_to 'New Post', new_post_path
+= paginate @posts
+
 
 :css
   [data-tab-content] {
@@ -41,10 +50,14 @@
     width:100%;
     display:table;
   }
-  .filters{
+  
+  .week-filter{
     text-align:center;
   }
-  .week-filter{
+  .month-filter{
+    text-align:center;
+  }
+  .checkboxes{
     text-align:center;
   }
 
@@ -88,3 +101,8 @@
       target.classList.add('active')
     })
   })
+  function ShowHideDiv(elem) {
+    console.log(elem);
+      var target = document.querySelector('[data-target="#'+elem.id+'"]');
+      target.style.display = elem.checked ? 'block' : 'none';
+  }

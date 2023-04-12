@@ -11,7 +11,8 @@ class PostsController < ApplicationController
     else
       @date = params[:date].to_date
     end
-    @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month , :created_at => @date.beginning_of_week..@date.end_of_week)
+    @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month , :created_at => @date.beginning_of_week..@date.end_of_week).page(params[:page])
+    puts @posts
     respond_to do |format|
       format.html
       format.js {render layout:false}
@@ -73,6 +74,8 @@ class PostsController < ApplicationController
   end
   # GET /posts/1 or /posts/1.json
   def show
+    @users=@post[:assigned_user_id]
+    @users=Kaminari.paginate_array(@users).page(params[:page]).per(2)
   end
 
   # GET /posts/new

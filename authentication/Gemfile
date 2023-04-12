@@ -16,7 +16,8 @@ gem 'font_awesome5_rails'
 gem 'certified', '~> 1.0'
 gem 'resque'
 gem 'resque-scheduler'
-
+gem 'kaminari-mongoid'
+gem 'kaminari'
 # gem "erb2haml"
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
