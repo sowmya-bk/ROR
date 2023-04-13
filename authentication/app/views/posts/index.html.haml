@@ -1,11 +1,12 @@
+%script{src:"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",type: "text/javascript"}
 %p#notice= notice
 %h1 Posts
 .checkboxes
-  %label{:for => "week-filter"}
-  %input#week-filter{:onchange => "ShowHideDiv(this)", :type => "checkbox",:checked => "checked"}/
+  %label{:for => "week-checkbox"}
+  %input#week-checkbox{:onclick => "filters()", :type => "checkbox",:checked => "checked",:value =>"week"}/
   Week
-  %label{:for => "month-filter"}
-  %input#month-filter{:onchange => "ShowHideDiv(this)", :type => "checkbox",:checked => "checked"}/
+  %label{:for => "month-checkbox"}
+  %input#month-checkbox{:onclick => "filters()", :type => "checkbox",:checked => "checked",:value => "month"}/
   Month
 .filters
   = render 'filter' , datee:@date
@@ -101,8 +102,25 @@
       target.classList.add('active')
     })
   })
-  function ShowHideDiv(elem) {
-    console.log(elem);
-      var target = document.querySelector('[data-target="#'+elem.id+'"]');
-      target.style.display = elem.checked ? 'block' : 'none';
+  function filters(){
+    var weekcheckbox=document.getElementById('week-checkbox')
+    var monthcheckbox=document.getElementById('month-checkbox')
+    
+    if(weekcheckbox.checked && monthcheckbox.checked){
+      var checkbox=weekcheckbox.value+monthcheckbox.value;
+    }
+    else  if(weekcheckbox.checked == true && monthcheckbox.checked == false){
+      var checkbox=weekcheckbox.value;
+    }
+    else if(monthcheckbox.checked == true && weekcheckbox.checked == false){
+      var checkbox=monthcheckbox.value;    
+    }
+    $.ajax({
+        method: 'GET',
+        url: '/',
+        data: { box: checkbox}
+        
+    });
+    
+    
   }

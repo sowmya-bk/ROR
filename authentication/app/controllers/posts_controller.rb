@@ -11,8 +11,14 @@ class PostsController < ApplicationController
     else
       @date = params[:date].to_date
     end
-    @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month , :created_at => @date.beginning_of_week..@date.end_of_week).page(params[:page])
+    @checkbox=params[:box]
+    if @checkbox != nil and @checkbox.include? 'week'
+      @posts =Post.where(:created_at => @date.beginning_of_week..@date.end_of_week).page(params[:page]).per(5)
+    else
+      @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month).page(params[:page]).per(5) 
+    end
     puts @posts
+    puts params[:box]
     respond_to do |format|
       format.html
       format.js {render layout:false}
