@@ -11,17 +11,21 @@ class PostsController < ApplicationController
     else
       @date = params[:date].to_date
     end
-    @checkbox=params[:box]
-    if @checkbox != nil and @checkbox.include? 'week'
-      @posts =Post.where(:created_at => @date.beginning_of_week..@date.end_of_week).page(params[:page]).per(5)
+    @checkbox=params[:box].present? ? params[:box] : 'weekmonth'
+    puts "++++++++++++++++++++++++++"
+    puts @checkbox
+    puts "++++++++++++++++++++++++++"
+    if @checkbox.include? 'week'
+      start_date=@date.beginning_of_week
+      end_date=@date.end_of_week
     else
-      @posts=Post.where(:created_at => @date.beginning_of_month..@date.end_of_month).page(params[:page]).per(5) 
+      start_date=@date.beginning_of_month
+      end_date=@date.end_of_month
     end
-    puts @posts
-    puts params[:box]
+    @posts=Post.where(:created_at => start_date..end_date).page(params[:page]).per(5) 
     respond_to do |format|
       format.html
-      format.js {render layout:false}
+      format.js {render 'index'}
     end
   end
   def users_assignment

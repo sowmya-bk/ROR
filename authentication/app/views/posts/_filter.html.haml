@@ -1,10 +1,14 @@
-.month-filter
-  = link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'), posts_path(date: datee - 1.month),remote: true,onclick: 'filters()'
-  %label= datee.strftime("%B %Y")
-  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date: datee + 1.month),remote: true,onclick: 'filters()'
-.week-filter
-  =link_to raw('<i class="fa fa-arrow-left" aria-hidden="true" ></i>'), posts_path(date: datee - 7.day),remote: true,onclick: 'filters()'
-  %label= datee.beginning_of_week.strftime("%d %b,%Y")
-  %label to
-  %label= datee.end_of_week.strftime("%d %b,%Y") 
-  = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'), posts_path(date: datee + 7.day),remote: true,onclick: 'filters()'
+-if @checkbox.include?('month')
+  = @checkbox
+  .month-filter
+    = link_to raw('<i class="fa fa-arrow-left" aria-hidden="true"></i>'),onclick: 'filters(datee - 1.month)'
+    %label= datee.strftime("%B %Y")
+    = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'),onclick: 'filters(datee + 1.month)'
+-if @checkbox.include?('week') 
+  = @checkbox 
+  .week-filter
+    =link_to raw('<i class="fa fa-arrow-left" aria-hidden="true" ></i>'),onclick: 'filters(datee - 7.day)'
+    %label= datee.beginning_of_week.strftime("%d %b,%Y")
+    %label to
+    %label= datee.end_of_week.strftime("%d %b,%Y") 
+    = link_to raw('<i class="fa fa-arrow-right" aria-hidden="true"></i>'),onclick: 'filters(datee + 7.day)'

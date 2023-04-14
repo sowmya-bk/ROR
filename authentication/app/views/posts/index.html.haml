@@ -9,7 +9,9 @@
   %input#month-checkbox{:onclick => "filters()", :type => "checkbox",:checked => "checked",:value => "month"}/
   Month
 .filters
-  = render 'filter' , datee:@date
+  = "......"
+  = render 'filter' , :datee => @date
+  = "------"
 .container 
   %ul.tabs
     %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
@@ -102,24 +104,35 @@
       target.classList.add('active')
     })
   })
-  function filters(){
-    var weekcheckbox=document.getElementById('week-checkbox')
-    var monthcheckbox=document.getElementById('month-checkbox')
-    
+  function filters(date){
+    var current_date=date
+    var weekcheckbox=document.getElementById('week-checkbox');
+    var monthcheckbox=document.getElementById('month-checkbox');
+    var monthfilter=document.querySelector('.month-filter');
+    var weekfilter=document.querySelector('.week-filter');
+    console.log(weekfilter)
+    console.log(current_date)
     if(weekcheckbox.checked && monthcheckbox.checked){
       var checkbox=weekcheckbox.value+monthcheckbox.value;
+      
     }
     else  if(weekcheckbox.checked == true && monthcheckbox.checked == false){
       var checkbox=weekcheckbox.value;
+      
     }
     else if(monthcheckbox.checked == true && weekcheckbox.checked == false){
-      var checkbox=monthcheckbox.value;    
+      var checkbox=monthcheckbox.value; 
+     
+    }
+    else{
+      var checkbox=weekcheckbox.value+monthcheckbox.value;
+      
     }
     $.ajax({
         method: 'GET',
         url: '/',
-        data: { box: checkbox}
-        
+        data: { box: checkbox, date: current_date},
+        dataType: 'script'
     });
     
     
