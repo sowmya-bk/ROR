@@ -23,10 +23,7 @@ class PostsController < ApplicationController
       end_date=@date.end_of_month
     end
     @posts=Post.where(:created_at => start_date..end_date).page(params[:page]).per(5) 
-    respond_to do |format|
-      format.html
-      format.js {render 'index'}
-    end
+    puts "aaaaaaaaaaaaa"
   end
   def users_assignment
     @post=Post.find(params[:id])
