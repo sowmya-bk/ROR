@@ -28,6 +28,10 @@
     = f.label :password_confirmation
     %br/
     = f.password_field :password_confirmation, autocomplete: "new-password"
+  .field
+    = f.label :Profile_Picture
+    %br/
+    = f.file_field :image
   .actions
     = f.submit "Sign up"
 = render "devise/shared/links"

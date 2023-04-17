@@ -1,0 +1,3 @@
+$("#adminposts").html('<%= j render 'posts/adminposts', locals: { posts: @posts } %>');
+$("#userposts").html('<%= j render 'posts/userposts', locals: { posts: @posts } %>');
+$(".filters").html('<%= j render 'posts/filter', locals: { datee: @date } %>');

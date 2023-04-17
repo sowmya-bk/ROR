@@ -5,7 +5,10 @@ class PostsController < ApplicationController
   skip_before_action :verify_authenticity_token
   
   # GET /posts or /posts.json
+  def home
+  end
   def index
+    puts Time.now
     if params[:date] == nil
       @date = Time.now
     else
@@ -24,6 +27,7 @@ class PostsController < ApplicationController
     end
     @posts=Post.where(:created_at => start_date..end_date).page(params[:page]).per(5) 
     puts "aaaaaaaaaaaaa"
+    render :index
   end
   def users_assignment
     @post=Post.find(params[:id])

@@ -2,6 +2,7 @@ class User
  
   include Mongoid::Document
   include Mongoid::Timestamps 
+  include CarrierWave::Mount
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   
@@ -18,6 +19,9 @@ class User
   format: { with: /\A(?=.*\d)(?=.*[A-Z])(?=.*\W)[^ ]{7,}\z/,
             message: 'Password should have more than 7 characters including 1 uppercase letter, 1 number, 1 special character'
           }
+
+  
+  mount_uploader :image, ImageUploader
 
   field :firstname, type: String
   validates :firstname, presence:true,uniqueness: {case_sensitive: false}

@@ -98,8 +98,8 @@
     })
   })
   function filters(date){
-    var current_date=date;
-    console.log(current_date);
+    var currentdate=date;
+    console.log(currentdate);
     var weekcheckbox=document.getElementById('week-checkbox');
     var monthcheckbox=document.getElementById('month-checkbox');
     var monthfilter=document.querySelector('.month-filter');
@@ -125,13 +125,8 @@
     console.log(checkbox);
     $.ajax({
         method: 'GET',
-        url: '/',
-        data: { box: checkbox, date: current_date},
+        url: '/posts',
+        data: {box: checkbox, date: currentdate},
         dataType: 'script'
     });
-    
-    
-  }
-  function hi(ab){
-    console.log("test"+ab);
   }

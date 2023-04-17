@@ -1,3 +1,0 @@
-$("#adminposts").html("#{escape_javascript(render partial: 'posts/adminposts', locals: { posts: @posts } )}");
-$("#userposts").html("#{escape_javascript(render partial: 'posts/userposts', locals: { posts: @posts } )}");
-$(".filters").html("#{escape_javascript(render partial: 'posts/filter', locals: { datee: @date } )}");

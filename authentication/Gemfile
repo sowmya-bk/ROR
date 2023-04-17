@@ -18,6 +18,7 @@ gem 'resque'
 gem 'resque-scheduler'
 gem 'kaminari-mongoid'
 gem 'kaminari'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 # gem "erb2haml"
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
