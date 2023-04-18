@@ -2,9 +2,9 @@
 %p#notice= notice
 %h1 Posts
 .checkboxes
-  = render 'checkbox'
+  = render 'checkbox',:selected_checkbox => @checkbox
 .filters
-  = render 'filter' , :datee => @date
+  = render 'filter' ,:presentdate => @date,:selected_box => @checkbox
 .container 
   %ul.tabs
     %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
@@ -123,10 +123,6 @@
       monthcheckbox.checked = true;
     }
     console.log(checkbox);
-    $.ajax({
-        method: 'GET',
-        url: '/posts',
-        data: {box: checkbox, date: currentdate},
-        dataType: 'script'
-    });
+    window.location.href = "/posts?box="+checkbox+"&date="+currentdate
+
   }

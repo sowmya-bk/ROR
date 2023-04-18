@@ -1,5 +1,6 @@
--if @posts != nil
-  - @posts.each do |post|
+- adminposts = posts
+-if adminposts.present?
+  - adminposts.each do |post|
     -if post[:post_created_user_id].to_s == current_user[:id].to_s
       %tr
         %td= post.title

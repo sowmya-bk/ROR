@@ -7,28 +7,25 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def home
   end
+
+
   def index
-    puts Time.now
-    if params[:date] == nil
-      @date = Time.now
-    else
-      @date = params[:date].to_date
-    end
+    @date=params[:date].present? ? params[:date].to_date : Time.now
     @checkbox=params[:box].present? ? params[:box] : 'weekmonth'
-    puts "++++++++++++++++++++++++++"
-    puts @checkbox
-    puts "++++++++++++++++++++++++++"
-    if @checkbox.include? 'week'
+  
+    if @checkbox.include?('week')
       start_date=@date.beginning_of_week
       end_date=@date.end_of_week
     else
       start_date=@date.beginning_of_month
       end_date=@date.end_of_month
     end
-    @posts=Post.where(:created_at => start_date..end_date).page(params[:page]).per(5) 
-    puts "aaaaaaaaaaaaa"
-    render :index
+    pagenum = params[:page].present? ? params[:page] : "1"
+    @posts=Post.where(:created_at => start_date..end_date).page(pagenum).per(5) 
+    
   end
+
+
   def users_assignment
     @post=Post.find(params[:id])
     @users=Array.new
