@@ -7,6 +7,12 @@
   %p
     %strong Body:
     = @post.body
+  - if @post[:attachments].present?
+    %p
+      %strong Attachments
+      - @post.attachments_urls.each do |attachment|
+        =link_to "#{attachment}",attachment
+
   = link_to 'Back', posts_path
   %a{:onclick => 'display()',:href =>'#'}Bulk Mails
   %table{class: "table table-striped"}
@@ -31,7 +37,8 @@
         %textarea{:name=>'comment'}
         %br
         %button{:type => 'submit'}Send Mail
-  = paginate @users
+  - if @users.present?
+    = paginate @users
 :css
   .container{
    align-items:center;

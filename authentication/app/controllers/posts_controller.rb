@@ -82,8 +82,10 @@ class PostsController < ApplicationController
   end
   # GET /posts/1 or /posts/1.json
   def show
-    @users=@post[:assigned_user_id]
-    @users=Kaminari.paginate_array(@users).page(params[:page]).per(2)
+    if @post[:assigned_user_id].present?
+      @users=@post[:assigned_user_id]
+      @users=Kaminari.paginate_array(@users).page(params[:page]).per(2)
+    end
   end
 
   # GET /posts/new
@@ -143,6 +145,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body, :post_created_user_id, assigned_user_id: params[:assigned_users])
+      params.require(:post).permit(:title, :body, :post_created_user_id, assigned_user_id: params[:assigned_users],attachments: [])
     end
 end

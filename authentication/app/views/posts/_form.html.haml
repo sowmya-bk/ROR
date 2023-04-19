@@ -13,6 +13,9 @@
   .field
     = f.label :body
     = f.text_area :body
+  .field
+    = f.label :attachments
+    = f.file_field :attachments, multiple: true 
   .field 
     %input{:type => 'hidden',:value => current_user.id,:name => "post[post_created_user_id]"}
   .actions
