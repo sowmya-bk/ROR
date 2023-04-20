@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   patch '/posts/:id/removeassigneduser',to: "posts#remove_assigned_user",as:'remove_assigned_user'
   get '/sendmail',to:"posts#send_mail_to_user"
   get '/multiplemails', to:"posts#send_multiple_mails"
+  delete '/posts/deleteattachments/:id',to: "posts#delete_attachments",as:'delete_all_attachments'
+  patch '/posts/removeattachment/:id',to: "posts#remove_attachment",as:'remove_attachment'
   require 'resque/server'
   require 'resque/scheduler/server'
   mount Resque::Server.new, at: "/resque"

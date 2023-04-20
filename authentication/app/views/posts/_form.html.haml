@@ -9,14 +9,22 @@
           %li= message
   .field
     = f.label :title
+    %br/
     = f.text_field :title
   .field
     = f.label :body
+    %br/
     = f.text_area :body
   .field
     = f.label :attachments
+    %br/
     = f.file_field :attachments, multiple: true 
   .field 
     %input{:type => 'hidden',:value => current_user.id,:name => "post[post_created_user_id]"}
   .actions
     = f.submit
+
+:css
+  .field{
+    padding:5px;
+  }

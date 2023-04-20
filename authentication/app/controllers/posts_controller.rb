@@ -51,9 +51,7 @@ class PostsController < ApplicationController
   end
   def remove_assigned_user
     @post=Post.find(params[:id])
-    @assigned_users_array=Array.new
-    @assigned_users_array[0]=params[:userid]
-    @post[:assigned_user_id]=@post[:assigned_user_id]-@assigned_users_array
+    @post[:assigned_user_id]=@post[:assigned_user_id]-[params[:userid]]
     puts @post[:assigned_user_id]
     @post.save
     redirect_to root_path, notice: "User Successfully removed."
@@ -79,6 +77,24 @@ class PostsController < ApplicationController
     puts "***************************"
     redirect_to root_path
 
+  end
+
+  def delete_attachments
+    @post = Post.find(params[:id])
+    @post[:attachments].clear
+    @post.save
+    redirect_to post_path , notice: "Attachments Deleted"
+  end
+
+  def remove_attachment
+    @post = Post.find(params[:id])
+    @post[:attachments]-=[params[:file]]
+    puts @post[:attachments]
+    puts @post[:attachments][0]
+    puts @post[:attachments][1]
+    puts @post[:attachments][2]
+    @post.save
+    redirect_to edit_post_path
   end
   # GET /posts/1 or /posts/1.json
   def show
