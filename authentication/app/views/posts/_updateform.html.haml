@@ -1,0 +1,16 @@
+%form{:method => 'post',:action => '/posts/update'}
+  
+  %label Title
+  %br/
+  %input{:name => 'post_title',:value => post.title}
+  %br/
+  %label Body
+  %br/
+  %input{:name => 'post_body',:value => post.body}
+  %br/
+  %label Attachments
+  %br/
+  %input{:type => 'file',:name => 'post_attachments[]',:multiple => true}
+  %br/
+  %input{:type => 'hidden',:name => 'id',:value => post.id}
+  %button{:type => 'submit'}Update Post

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get '/multiplemails', to:"posts#send_multiple_mails"
   delete '/posts/deleteattachments/:id',to: "posts#delete_attachments",as:'delete_all_attachments'
   patch '/posts/removeattachment/:id',to: "posts#remove_attachment",as:'remove_attachment'
+  post '/posts/update', to: "posts#add_attachments", as:'update_post'
   require 'resque/server'
   require 'resque/scheduler/server'
   mount Resque::Server.new, at: "/resque"

@@ -37,6 +37,7 @@ class PostsController < ApplicationController
       end
     end
   end
+
   def assigned_users
     @assigned_users = Array.new
     @assigned_users = params[:assigned_users]
@@ -49,20 +50,22 @@ class PostsController < ApplicationController
     @post.save
     redirect_to root_path, notice: "User Successfully assigned."
   end
+
   def remove_assigned_user
     @post=Post.find(params[:id])
     @post[:assigned_user_id]=@post[:assigned_user_id]-[params[:userid]]
     puts @post[:assigned_user_id]
     @post.save
     redirect_to root_path, notice: "User Successfully removed."
-
   end
+
   def send_mail_to_user
     @user = params[:user_email]
     @comment=params[:comment]
     UserMailer.sending_email_with_comment(@user,@comment).deliver_now
     redirect_to root_path
   end
+
   def send_multiple_mails
     
     @users_array=eval(params[:users])    
@@ -96,6 +99,16 @@ class PostsController < ApplicationController
     @post.save
     redirect_to edit_post_path
   end
+
+  def add_attachments
+    @post = Post.find(params[:id])
+    @post[:title]=params[:post_title]
+    @post[:body]=params[:post_body]
+    @post[:attachments]+=[params[:post_attachments]]
+    @post.save
+    redirect_to posts_path , notice: "Post updated"
+  end
+
   # GET /posts/1 or /posts/1.json
   def show
     if @post[:assigned_user_id].present?
