@@ -19,8 +19,10 @@ class User
   format: { with: /\A(?=.*\d)(?=.*[A-Z])(?=.*\W)[^ ]{7,}\z/,
             message: 'Password should have more than 7 characters including 1 uppercase letter, 1 number, 1 special character'
           }
-
   
+        
+  enum :role, [:user,:admin]
+
   mount_uploader :image, ImageUploader
 
   field :firstname, type: String
