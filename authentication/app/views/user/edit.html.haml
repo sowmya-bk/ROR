@@ -1,0 +1,27 @@
+%form{:method => 'post',:action => '/user/update'}
+  %input{:value => @user.id,:name => "id",:type => "hidden"}
+  %label Email
+  %br/
+  %input{:value => @user.email,:name => "user_email",:type => 'email'}
+  %br/
+  %label Firstname
+  %br/
+  %input{:value => @user.firstname,:name => "user_firstname"}
+  %br/
+  %label Lastname
+  %br/
+  %input{:value => @user.lastname,:name => "user_lastname"}
+  %br/
+  %label Username
+  %br/
+  %input{:value => @user.username,:name => "user_username"}
+  %br/
+  %label Role
+  %br/
+  %select{:name => "user_role"}
+    %option{:value => "user"}
+      User
+    %option{:value => "admin"}
+      Admin
+  %br/
+  %button{:type => 'submit'}Update User

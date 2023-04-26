@@ -19,6 +19,7 @@ gem 'resque-scheduler'
 gem 'kaminari-mongoid'
 gem 'kaminari'
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'enumerize'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets

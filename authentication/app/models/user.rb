@@ -1,5 +1,5 @@
 class User
- 
+  extend Enumerize
   include Mongoid::Document
   include Mongoid::Timestamps 
   include CarrierWave::Mount
@@ -20,8 +20,9 @@ class User
             message: 'Password should have more than 7 characters including 1 uppercase letter, 1 number, 1 special character'
           }
   
-        
-  enum :role, [:user,:admin]
+         
+  field :role
+  enumerize :role, in: [:user, :admin],default: :user
 
   mount_uploader :image, ImageUploader
 

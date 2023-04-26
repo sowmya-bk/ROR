@@ -1,3 +1,5 @@
 = 'Hi' 
-=#{current_user.username}
-= link_to "posts",posts_path
+- if current_user.role == 'admin'
+  = link_to "users",users_path
+-else 
+  = link_to "posts",posts_path

@@ -76,6 +76,8 @@ GEM
       responders
       warden (~> 1.2.3)
     digest (3.1.1)
+    enumerize (2.5.0)
+      activesupport (>= 3.2)
     erubis (2.7.0)
     et-orbi (1.2.7)
       tzinfo
@@ -301,6 +303,7 @@ DEPENDENCIES
   certified (~> 1.0)
   coffee-rails (~> 4.2)
   devise
+  enumerize
   font_awesome5_rails
   haml-rails (~> 0.9.0)
   jbuilder (~> 2.5)

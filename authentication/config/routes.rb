@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   delete '/posts/deleteattachments/:id',to: "posts#delete_attachments",as:'delete_all_attachments'
   patch '/posts/removeattachment/:id',to: "posts#remove_attachment",as:'remove_attachment'
   post '/posts/update', to: "posts#add_attachments", as:'update_post'
+  get '/users',to: "user#index", as:'users'
+  get '/user/edit/:id', to: "user#edit", as:"user_edit"
+  post '/user/update', to: "user#update", as:"user_update"
   require 'resque/server'
   require 'resque/scheduler/server'
   mount Resque::Server.new, at: "/resque"
