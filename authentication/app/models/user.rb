@@ -11,6 +11,9 @@ class User
   validates_presence_of :firstname,:lastname,:username
   
   ## Database authenticatable
+  field :phone_number, type: Integer
+  validates :phone_number,uniqueness: true, presence: true,numericality: true,length: { minimum: 10,maximum: 15 } 
+
   field :email, type: String, default: ""
   validates :email, presence:true,uniqueness: {case_sensitive: false}
 

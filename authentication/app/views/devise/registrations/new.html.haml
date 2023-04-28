@@ -18,6 +18,10 @@
     %br/
     = f.text_field :username, autofocus: true, autocomplete: "username"
   .field
+    = f.label :Phone_Number
+    %br/
+    = f.text_field :phone_number, autofocus: true, autocomplete: "phone_number",type: "number"
+  .field
     = f.label :password
     - if @minimum_password_length
       %em
