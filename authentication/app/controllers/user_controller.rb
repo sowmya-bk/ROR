@@ -9,20 +9,14 @@ class UserController < ApplicationController
     end
 
     def create
-        @user = User.new(user_params)
+        @user = User.new(email: params["user[email]"])
         @user.save
-        if @user.save
-            flash[:success] = "Successfully registered"
-            redirect_to users_path
-          else
-            flash[:error] = "Cannot create an user, check the input and try again"
-            render :new
-            puts "aaaaaaaaaaaaaa"
-        end
+        
         puts "################"
     end
 
     def edit
+        
         @user=User.find(params[:id])
     end
     def update
@@ -33,6 +27,7 @@ class UserController < ApplicationController
         @user.username = params[:username]
         @user.role = params[:role]
         @user.phone_number = params[:phone_number]
+        @user.update
         @user.save
         redirect_to users_path, notice: "User updated successfully"
     end
