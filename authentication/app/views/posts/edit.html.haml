@@ -1,5 +1,19 @@
 %h1 Editing Post
-= render 'editform', post: @post
+= render 'updateform', post: @post
+- if @post[:attachments].present?
+  %p
+    %strong Attachments
+    - @post[:attachments].each do |attachment|
+      #attachment
+        =link_to "#{attachment}",attachment
+        =button_to 'X',remove_attachment_path(@post,file:attachment) ,method: :patch , data: {confirm: 'Are you sure?'}
+-if @post[:attachments].present?
+  = button_to 'Delete all attachments', delete_all_attachments_path(@post) ,method: :delete , data: {confirm: 'Are you sure?'}       
 = link_to 'Show', @post
 |
 = link_to 'Back', posts_path
+
+:css
+  #attachment{
+    display:flex;
+  }

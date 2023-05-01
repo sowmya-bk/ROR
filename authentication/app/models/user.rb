@@ -1,6 +1,8 @@
 class User
- 
+  extend Enumerize
   include Mongoid::Document
+  include Mongoid::Timestamps 
+  include CarrierWave::Mount
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   
@@ -9,6 +11,9 @@ class User
   validates_presence_of :firstname,:lastname,:username
   
   ## Database authenticatable
+  field :phone_number, type: Integer
+  validates :phone_number,uniqueness: true, presence: true,numericality: true,length: { minimum: 10,maximum: 15 } 
+
   field :email, type: String, default: ""
   validates :email, presence:true,uniqueness: {case_sensitive: false}
 
@@ -17,6 +22,12 @@ class User
   format: { with: /\A(?=.*\d)(?=.*[A-Z])(?=.*\W)[^ ]{7,}\z/,
             message: 'Password should have more than 7 characters including 1 uppercase letter, 1 number, 1 special character'
           }
+  
+         
+  field :role
+  enumerize :role, in: [:user, :admin],default: :user
+
+  mount_uploader :image, ImageUploader
 
   field :firstname, type: String
   validates :firstname, presence:true,uniqueness: {case_sensitive: false}

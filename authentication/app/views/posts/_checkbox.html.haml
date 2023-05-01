@@ -1,0 +1,9 @@
+- box = selected_checkbox
+- week = box.include?('week') ? true : false
+- month = box.include?('month') ? true : false
+%label{:for => "week-checkbox"}
+%input#week-checkbox{:onclick => "filters('#{@date}')", :type => "checkbox",:checked => week,:value =>"week"}/
+Week
+%label{:for => "month-checkbox"}
+%input#month-checkbox{:onclick => "filters('#{@date}')", :type => "checkbox",:checked => month,:value => "month"}/
+Month

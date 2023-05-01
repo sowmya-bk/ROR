@@ -1,22 +1,128 @@
+%script{src:"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",type: "text/javascript"}
 %p#notice= notice
 %h1 Posts
+.checkboxes
+  = render 'checkbox',:selected_checkbox => @checkbox
+.filters
+  = render 'filter' ,:presentdate => @date,:selected_box => @checkbox
 .container 
-  %table{class: 'table table-striped'}
-    %thead
-      %tr
-        %th Title
-        %th Body
-        %th{:colspan => "3"}
-    %tbody
-      - @posts.each do |post|
+  %ul.tabs
+    %li.active.tab{'data-tab-target': "#admin_posts"}Admin Posts
+    %li.tab{'data-tab-target': "#user_posts"}User Posts
+  .tab-content
+    %table{class: 'table table-striped active',id: 'admin_posts','data-tab-content': '',border: '0'}
+      %thead
         %tr
-          %td= post.title
-          %td= post.body
-          %td= link_to 'Show', post
-          %td= link_to raw('<i class="fas fa-edit"></i>'), edit_post_path(post)
-          %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'), post, method: :delete, data: { confirm: 'Are you sure?' }
+          %th Title
+          %th Body
+          %th Created Date
+          %th{:colspan => "4"}
+      %tbody#adminposts
+        = render 'adminposts', posts: @posts
+    %table{class: 'table table-striped',id: 'user_posts','data-tab-content': ''}
+      %thead
+        %tr
+          %th Title
+          %th Body
+          %th Created Date
+          %th{:colspan => "4"}
+        %tbody#userposts
+          = render 'userposts', posts: @posts
 %br/
 = link_to 'New Post', new_post_path
+= paginate @posts
+
 
 :css
- 
+  [data-tab-content] {
+    display: none;
+  }
+
+  .active[data-tab-content] {
+    display: block;
+  }
+  thead,tbody{
+    
+    width:100%;
+    display:table;
+  }
+  
+  .week-filter{
+    text-align:center;
+  }
+  .month-filter{
+    text-align:center;
+  }
+  .checkboxes{
+    text-align:center;
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+  }
+
+  .tab {
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .tab.active {
+    background-color: #CCC;
+  }
+
+  .tab:hover {
+    background-color: #AAA;
+  }
+
+  
+:javascript
+  var tabs = document.querySelectorAll('[data-tab-target]');
+  var tabContents = document.querySelectorAll('[data-tab-content]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      var target = document.querySelector(tab.dataset.tabTarget);
+      tabContents.forEach(tabContent => {
+        tabContent.classList.remove('active');
+      })
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+      })
+      tab.classList.add('active');
+      target.classList.add('active');
+    })
+  })
+  function filters(date){
+    var currentdate=date;
+    console.log(currentdate);
+    var weekcheckbox=document.getElementById('week-checkbox');
+    var monthcheckbox=document.getElementById('month-checkbox');
+    var monthfilter=document.querySelector('.month-filter');
+    var weekfilter=document.querySelector('.week-filter');
+    
+    if(weekcheckbox.checked && monthcheckbox.checked){
+      var checkbox=weekcheckbox.value+monthcheckbox.value;
+      
+    }
+    else  if(weekcheckbox.checked == true && monthcheckbox.checked == false){
+      var checkbox=weekcheckbox.value;
+      
+    }
+    else if(monthcheckbox.checked == true && weekcheckbox.checked == false){
+      var checkbox=monthcheckbox.value; 
+     
+    }
+    else if(monthcheckbox.checked == false && weekcheckbox.checked == false){
+      var checkbox=weekcheckbox.value+monthcheckbox.value;
+      weekcheckbox.checked = true;
+      monthcheckbox.checked = true;
+    }
+    console.log(checkbox);
+    window.location.href = "/posts?box="+checkbox+"&date="+currentdate
+
+  }

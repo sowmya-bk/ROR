@@ -1,0 +1,42 @@
+%form{:method => 'post',:action => '/user/create'}
+  %input{:type=> 'hidden',:name => 'authenticity_token',:value =>form_authenticity_token }
+  %label Email
+  %br/
+  %input{:name => "user[email]",:type => "email"}
+  %br/
+
+  %label Firstname
+  %br/
+  %input{:name => "user[firstname]"}
+  %br/
+
+  %label Lastname
+  %br/
+  %input{:name => "user[lastname]"}
+  %br/
+
+  %label Username
+  %br/
+  %input{:name => "user[username]"}
+  %br/
+  
+  %label Phone_Number
+  %br/
+  %input{:name => "user[phone_number]"}
+  %br/
+
+  %label Role
+  %br/
+  %select{:name => "user[role]"}
+    %option{:value => "user"}
+      User
+    %option{:value => "admin"}
+      Admin
+  %br/
+
+  %label Password
+  %br/
+  %input{:type => "password",:name => "user[encrypted_password]"}
+  %br/
+
+  %button{:type => 'submit'}Create User

@@ -1,0 +1,13 @@
+=link_to "create User",user_new_path
+%table
+  %thead
+    %tr
+      %th Username
+      %th Email
+      %th{:colspan => "1"}
+  %tbody
+    -@users.each do |user|
+      %tr
+        %td #{user.username}
+        %td #{user.email}
+        %td= link_to raw('<i class="fas fa-edit"></i>'),user_edit_path(user)

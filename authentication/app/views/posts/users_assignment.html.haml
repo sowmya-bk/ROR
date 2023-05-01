@@ -1,0 +1,71 @@
+%link{:href => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css",:rel => "stylesheet"}
+%script{:src => "https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"}
+.container 
+  %form{:action => '/posts/assignedusers',:method => 'post'}
+    %input{:type => 'hidden',:value => @post.id, :name =>"postid"}
+    %select{:multiple => true,:name => "assigned_users[]",:id => 'selecttag'}
+      -@users.each do |user|
+        -@user=User.find(user)
+        %option{:value => user}
+          #{@user.username}
+    %button{:type => 'submit',:id =>'assignUsersButton',:onclick =>'assignedUsersTable()'}Assign Users
+  %table{class: "table table-striped"}
+    %thead
+      %tr
+        %th Assigned Users
+        %th{:colspan =>'2'}
+    %tbody
+      -if @post[:assigned_user_id]!=nil
+        -@post[:assigned_user_id].each do |user|
+          -@user=User.find(user)
+          %tr
+            %td #{@user.username}
+            
+            %td
+              %a{:onclick => 'display_popup()',:href =>'#'} Send Mail
+            %td= button_to 'X',remove_assigned_user_path(@post,userid:@user), method: :patch, data: { confirm: 'Are you sure,You want to remove the user?' }
+
+            #email_form 
+              %form{:action => '/sendmail'}
+                %input{:type =>'hidden',:value => @user.email,:name =>'user_email'}
+                
+                %br
+                %label Comments
+                %br
+                %textarea{:id =>'comment',:name =>'comment'}
+                %br
+                %button{:type =>'submit' } Send Email
+  
+:css
+  .container{
+    margin-top: 30px;
+  }
+  #assignUsersButton{
+     margin-top:10px;
+    margin-bottom:10px;
+  }
+  .table{
+    margin-top:30px;
+    margin-right:40px;
+  }
+  #email_form{
+    display:none;
+    width:250px;
+    height:300px;
+    background:lightblue; 
+    padding:30px;
+    padding-top:60px;
+    transform: translate(300px) scale(1);
+    
+  }
+:javascript
+  new MultiSelectTag("selecttag");
+  function display_popup(){
+    event.preventDefault();
+    document.getElementById('email_form').style.display='block';
+  }
+  function close_popup(){
+    document.getElementById('email_form').style.display='none';
+
+  }
+  
