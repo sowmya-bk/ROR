@@ -1,5 +1,5 @@
 %form{:method => 'post',:action => '/user/create'}
-  %input{:type=> 'hidden',:name => 'authenticity_token',:value =>form_authenticity_token }
+ 
   %label Email
   %br/
   %input{:name => "user[email]",:type => "email"}
@@ -20,7 +20,7 @@
   %input{:name => "user[username]"}
   %br/
   
-  %label Phone_Number
+  %label PhoneNumber
   %br/
   %input{:name => "user[phone_number]"}
   %br/
@@ -36,7 +36,7 @@
 
   %label Password
   %br/
-  %input{:type => "password",:name => "user[encrypted_password]"}
+  %input{:type => "password",:name => "user[password]"}
   %br/
 
   %button{:type => 'submit'}Create User

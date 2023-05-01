@@ -9,10 +9,13 @@ class UserController < ApplicationController
     end
 
     def create
-        @user = User.new(email: params["user[email]"])
-        @user.save
-        
-        puts "################"
+        @user = User.new(user_params)
+        puts @user
+        if @user.save
+            redirect_to users_path, notice: "user successfully created"
+        else
+            puts @user.errors.to_yaml
+        end 
     end
 
     def edit
@@ -21,19 +24,21 @@ class UserController < ApplicationController
     end
     def update
         @user = User.find(params[:id])
-        @user.email = params[:email]
-        @user.firstname = params[:firstname]
-        @user.lastname = params[:lastname]
-        @user.username = params[:username]
-        @user.role = params[:role]
-        @user.phone_number = params[:phone_number]
-        @user.update
-        @user.save
-        redirect_to users_path, notice: "User updated successfully"
+        if @user.update(user_params)
+          redirect_to users_path, notice: "User updated successfully"
+        else
+          raise @user.errors.to_yaml
+        end
+    end
+    
+    def destroy
+        @user = User.find(params[:id])
+        @user.destroy
+        redirect_to users_path, notice: "User deleted"
     end
     private
 
     def user_params
-        params.require(:user).permit(:email, :firstname, :lastname, :username, :role, :phone_number, :encrypted_password)
+        params.require(:user).permit(:email, :firstname, :lastname, :username, :role, :phone_number, :password)
     end
 end

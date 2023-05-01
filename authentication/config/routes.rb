@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post '/user/update', to: "user#update", as:"user_update"
   get '/user/new', to: "user#new", as:"user_new"
   post '/user/create', to: "user#create", as:"user_create"
+  delete '/user/delete/:id', to: "user#destroy", as:"user_delete"
   require 'resque/server'
   require 'resque/scheduler/server'
   mount Resque::Server.new, at: "/resque"

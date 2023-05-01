@@ -1,3 +1,4 @@
+%p#notice= notice
 =link_to "create User",user_new_path
 %table
   %thead
@@ -11,3 +12,4 @@
         %td #{user.username}
         %td #{user.email}
         %td= link_to raw('<i class="fas fa-edit"></i>'),user_edit_path(user)
+        %td= link_to raw('<i class="fa fa-trash" aria-hidden="true"></i>'),user_delete_path(user), method: :delete, data: { confirm: 'Are you sure?' }

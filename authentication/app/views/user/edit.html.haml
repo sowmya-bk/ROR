@@ -2,28 +2,28 @@
   %input{:value => @user.id,:name => "id",:type => "hidden"}
   %label Email
   %br/
-  %input{:value => @user.email,:name => "email",:type => 'email'}
+  %input{:value => @user.email,:name => "user[email]",:type => 'email'}
   %br/
   %label Firstname
   %br/
-  %input{:value => @user.firstname,:name => "firstname"}
+  %input{:value => @user.firstname,:name => "user[firstname]"}
   %br/
   %label Lastname
   %br/
-  %input{:value => @user.lastname,:name => "lastname"}
+  %input{:value => @user.lastname,:name => "user[lastname]"}
   %br/
   %label Username
   %br/
-  %input{:value => @user.username,:name => "username"}
+  %input{:value => @user.username,:name => "user[username]"}
   %br/
   %label Phone_Number
   %br/
-  %input{:value => @user.phone_number,:name => "phone_number"}
+  %input{:value => @user.phone_number,:name => "user[phone_number]"}
   %br/
 
   %label Role
   %br/
-  %select{:name => "role"}
+  %select{:name => "user[role]"}
     %option{:value => "user"}
       User
     %option{:value => "admin"}
