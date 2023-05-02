@@ -1,7 +1,9 @@
 class UserController < ApplicationController
+    before_action :authenticate_user!
     skip_before_action :verify_authenticity_token
     def index
         @users = User.where(:role => 'user')
+        authorize @users
     end
 
     def new
@@ -14,7 +16,7 @@ class UserController < ApplicationController
         if @user.save
             redirect_to users_path, notice: "user successfully created"
         else
-            puts @user.errors.to_yaml
+            render :new
         end 
     end
 
@@ -27,7 +29,7 @@ class UserController < ApplicationController
         if @user.update(user_params)
           redirect_to users_path, notice: "User updated successfully"
         else
-          raise @user.errors.to_yaml
+            render :edit
         end
     end
     

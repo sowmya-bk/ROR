@@ -8,19 +8,18 @@ class User
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates_presence_of :firstname,:lastname,:username
   
   ## Database authenticatable
   field :phone_number, type: Integer
   validates :phone_number,uniqueness: true, presence: true,numericality: true,length: { minimum: 10,maximum: 15 } 
 
   field :email, type: String, default: ""
-  validates :email, presence:true,uniqueness: {case_sensitive: false}
+  validates :email,uniqueness: {case_sensitive: false},format: { with: /\w+@\w+\.{1}[a-zA-Z]{2,}/, on: :create , message: "Address is not valid"}
 
   field :encrypted_password, type: String, default: ""
-  validates :encrypted_password, 
-  format: { with: /\A(?=.*\d)(?=.*[A-Z])(?=.*\W)[^ ]{7,}\z/,
-            message: 'Password should have more than 7 characters including 1 uppercase letter, 1 number, 1 special character'
+  validates :password, 
+  format: { with: /\A(?=.{8,})(?=.*\d)(?=.*[A-Z])(?=.*\W)\z/,
+            message: 'should have more than 8 characters including 1 uppercase letter, 1 number, 1 special character'
           }
   
          

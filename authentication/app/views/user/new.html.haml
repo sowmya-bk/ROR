@@ -1,3 +1,4 @@
+= @user.errors.full_messages if @user.errors.any?
 %form{:method => 'post',:action => '/user/create'}
  
   %label Email
