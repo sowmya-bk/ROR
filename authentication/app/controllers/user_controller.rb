@@ -3,7 +3,7 @@ class UserController < ApplicationController
     skip_before_action :verify_authenticity_token
     def index
         @users = User.where(:role => 'user')
-        authorize @users
+        authorize User
     end
 
     def new
